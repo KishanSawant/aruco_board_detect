@@ -82,3 +82,30 @@ python `rospack find aruco_board_detect`/scripts/generate_aruco.py -o marker_44.
 <img src=assets/marker_44.png width=400/>
 
 
+# To use for Kinova arm
+
+1. Clone from `https://github.com/Kinovarobotics/ros_kortex_vision`, `https://github.com/KishanSawant/aruco_board_detect` and `https://github.com/Kinovarobotics/ros_kortex`
+2. Set ROS_IP on local system to 192.168.1.11
+3. In CMakeLists.txt of aruco_board_detect, make this change,
+    ```
+    find_package(OpenCV 4.2 REQUIRED)
+    ```
+4. In aruco_board_detect.launch, make this change,
+    ```
+    <arg name="show_debug_img"      default="true" />
+    ```
+5. After exporting ROS_IP, launch,
+    ```
+    roslaunch kinova_vision kinova_vision_rgbd.launch device:=192.168.1.12
+    ```
+6. In another terminal, launch,
+    ```
+    roslaunch aruco_board_detect aruco_board_detect.launch
+    ``` 
+7. Save the data from: 
+    ```
+    rostopic echo /aruco_board_detector/board_pose
+    rosrun tf tf_echo /base_link /camera_link
+    ```
+8. Process this data to estimate the global frame with respect to base_link of respective arm
+9. PS: use aruco board instead of single marker
