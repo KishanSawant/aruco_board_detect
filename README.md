@@ -96,6 +96,7 @@ python `rospack find aruco_board_detect`/scripts/generate_aruco.py -o marker_44.
     ```
 5. After exporting ROS_IP, launch,
     ```
+    roslaunch kortex_driver kortex_driver.launch device:=192.168.1.12
     roslaunch kinova_vision kinova_vision_rgbd.launch device:=192.168.1.12
     ```
 6. In another terminal, launch,
